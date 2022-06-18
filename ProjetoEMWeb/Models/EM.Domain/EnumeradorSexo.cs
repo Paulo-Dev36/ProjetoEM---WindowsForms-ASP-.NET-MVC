@@ -1,0 +1,8 @@
+﻿namespace ProjetoEMWeb.Models.EM.Domain
+{
+    public enum EnumeradorSexo
+    {
+        Masculino = 0,
+        Feminino = 1
+    }
+}

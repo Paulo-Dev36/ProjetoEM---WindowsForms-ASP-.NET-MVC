@@ -1,0 +1,94 @@
+﻿@using ProjetoEMWeb.Models.EM.Domain
+@using ProjetoEMWeb.Models.EM.Repository
+@model ProjetoEMWeb.Models.EM.Domain.Aluno
+
+
+@{
+    ViewData["Title"] = "Cadastrar novo Aluno";
+}
+
+<h1>Cadastrar novo Aluno</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="Add" class="col-md-10"> 
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+            <div class="col-md-3">
+                <label asp-for="Matricula" class="control-label"></label>
+                <input asp-for="Matricula" type="text" class="form-control" style="text-align:right" onkeypress="return PermiteSomenteNumeros(event);" id="Matricula" maxlength="9"/>
+                <span asp-validation-for="Matricula" class="text-danger"></span>
+            </div>
+            <div class="col-md-8">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" maxLength="100" id="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                <label asp-for="Sexo" class="form-label"></label>
+                    <select asp-for="Sexo" class="custom-select">
+                        <option value="0">Masculino</option>
+                        <option value="1">Feminino</option>
+                    </select>
+                <span asp-validation-for="Sexo" class="text-danger"></span>
+            </div>
+            <div class="col-md-3">
+                <label asp-for="Nascimento" class="control-label"></label>
+                <input asp-for="Nascimento" class="form-control" type="date"/>
+                <span asp-validation-for="Nascimento" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="CPF" class="control-label"></label>
+                <input asp-for="CPF" onkeypress="return PermiteSomenteNumeros(event);" maxlength="11" class="form-control" />
+                <span asp-validation-for="CPF" class="text-danger"></span>
+            </div>
+            </div>
+            </br>
+            <div class="row">
+                <a asp-action="Index">
+                <button type="button" class="btn btn-secondary"style="margin-left: 510px">Voltar</button>
+                </a>
+                <input type="submit" value="Cadastrar"class="btn btn-success" style="margin-left:15px" onclick="clickAdd"></input>
+               </a>
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+
+<script type="text/javascript">
+    function PermiteSomenteNumeros(event) 
+    {
+        var charCode = (event.which) ? event.which : event.keyCode
+ 
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        
+        event.char.length
+
+        return true;
+    }
+  </script>
+
+<script language="JavaScript">
+    var inputNome = document.querySelector("#Nome");
+Nome.addEventListener("keypress", function(e) {
+    var keyCode = (e.keyCode ? e.keyCode : e.which);
+  
+  if (keyCode > 47 && keyCode < 58) {
+    e.preventDefault();
+  }
+});
+</script>
+
+}
