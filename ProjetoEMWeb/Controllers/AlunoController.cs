@@ -1,28 +1,64 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ProjetoEMWeb.Models.EM.Domain;
-using ProjetoEMWeb.Models.EM.Repository;
+﻿using EM.Domain;
+using EM.Repository;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace ProjetoEMWeb.Controllers
 {
+    
     public class AlunoController : Controller
     {
         Aluno aluno = new Aluno();
-        RepositorioAluno repositorioAluno = new RepositorioAluno(); 
-        public IActionResult Index()
+        DataTable dtTable = new DataTable();
+        RepositorioAluno repositorioAluno = new RepositorioAluno();
+        
+        public IActionResult Index(IEnumerable<Aluno> alunos)
         {
-            List<Aluno> listaAlunos = new List<Aluno>();
-            listaAlunos = repositorioAluno.GetAll().ToList();
-            
-            return View(listaAlunos);
+            alunos = repositorioAluno.GetAll().ToList();
+
+            return View(alunos);
         }
 
+        [HttpPost]
+        public IActionResult Index(string MatriculaOuNomeAluno)
+        {
+            List<Aluno> listaAlunos = new List<Aluno>();
+            Aluno aluno = new Aluno();
+            listaAlunos = repositorioAluno.GetAll().ToList();
+
+            if (!String.IsNullOrEmpty(MatriculaOuNomeAluno))
+            {
+                foreach (char caracter in MatriculaOuNomeAluno)
+                {
+                    if (char.IsDigit(caracter))
+                    {
+                        return RedirectToAction("IndexM");
+                    }
+                    else
+                    {
+                        listaAlunos = repositorioAluno.GetByContendoNoNome(MatriculaOuNomeAluno).ToList();
+                        return View(listaAlunos);
+                    }                    
+                }
+            }
+            return View(listaAlunos);
+        }
         
-      
+
+        public IActionResult IndexM(string MatriculaOuNomeAluno)
+        {
+            Aluno aluno = new Aluno();
+            int matricula = Convert.ToInt32(MatriculaOuNomeAluno);
+            matricula = 1;
+            aluno = repositorioAluno.GetByMatricula(matricula);
+
+                return View(aluno);
+        }
+
+
 
         public ActionResult Remove(Aluno aluno)
         {
@@ -68,7 +104,6 @@ namespace ProjetoEMWeb.Controllers
 
             repositorioAluno.Add(aluno);
             return RedirectToAction("Index");
-            
         }
 
         public IActionResult Update(int id)
@@ -114,6 +149,15 @@ namespace ProjetoEMWeb.Controllers
         }
 
 
+        private void AddColunasTabela()
+        {
+            dtTable.Columns.Add("Matricula", typeof(int));
+            dtTable.Columns.Add("Nome", typeof(string));
+            dtTable.Columns.Add("Sexo", typeof(EnumeradorSexo));
+            dtTable.Columns.Add("Nascimento", typeof(DateTime));
+            dtTable.Columns.Add("CPF", typeof(string));
+        }
+
 
         private bool ValidaMatricula(int matricula)
         {
@@ -123,7 +167,7 @@ namespace ProjetoEMWeb.Controllers
                 return false;
             }
 
-            if(matricula <= 0)
+            if(matricula == 0)
             {
                 ModelState.AddModelError("Matricula", "A matrícula deve ser um número maior que 0");
                 return false;

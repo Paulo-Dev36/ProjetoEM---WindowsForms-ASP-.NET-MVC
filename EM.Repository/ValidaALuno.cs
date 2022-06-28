@@ -1,15 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using EM.Domain;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace EM.Domain
+namespace EM.Repository
 {
-    public partial class ValidacaoAluno
+    public class ValidaALuno
     {
-        
+        RepositorioAluno repositorioAluno = new RepositorioAluno();
+        Aluno aluno = new Aluno();
+
+
+        public bool ValidaMatricula(int matricula)
+        {
+            if (repositorioAluno.GetByMatricula(matricula) != null)
+            {
+                MessageBox.Show($"A matrícula {matricula} já está sendo utilizada, tente outro número!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            /*if (aluno.Equals(matricula))
+            {
+                MessageBox.Show($"A matrícula {aluno.Matricula} já está sendo utilizada, tente outro número!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                textBoxMatricula.Clear();
+                textBoxMatricula.Focus();
+                return false;
+            }*/
+            return true;
+        }
+        public bool ValidaMatriculaVazia(string matricula)
+        {
+            if (string.IsNullOrEmpty(matricula))
+            {
+                MessageBox.Show("Campo de matrícula obrigatório!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
         public bool ValidoNome(string nome)
         {
             if (string.IsNullOrWhiteSpace(nome))
@@ -26,9 +52,21 @@ namespace EM.Domain
                 MessageBox.Show("A data de nascimento não pode ser maior que a data atual!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            if(nascimento.Equals(DateTime.MinValue))
+            if (nascimento.Equals(DateTime.MinValue))
             {
                 MessageBox.Show("A data de nascimento não é válida!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+
+        public bool CpfRepetido(string cpf, int matricula)
+        {
+            if (string.IsNullOrWhiteSpace(cpf))
+                return true;
+            if (repositorioAluno.Get(a => a.CPF == cpf && a.Matricula != matricula).FirstOrDefault() != null)
+            {
+                MessageBox.Show("CPF já cadastrado.", "Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             return true;

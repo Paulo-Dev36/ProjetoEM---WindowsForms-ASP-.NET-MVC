@@ -3,29 +3,26 @@ using FirebirdSql.Data.FirebirdClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EM.Repository
 {
     public class RepositorioAluno : RepositorioAbstrato<Aluno>
     {
-        public static string ConexaoStr { get; private set; }
+        string ConexaoStr;
 
         public RepositorioAluno()
         { 
             ConexaoStr = "User=SYSDBA; Password=masterkey;Database=C:\\Users\\pvini\\source\\repos\\Escolar Manager\\Banco\\BANCOESCOLARMANAGERTESTE.FB4;" +
-                                                                                                  "DataSource=Localhost;Port=3054";
+                                                                                                  "character set=Iso8859_1; DataSource=Localhost;Port=3054";
 
         }
 
-        public static FbConnection conexao;
+        public FbConnection conexao;
 
-        public static FbConnection ConexaoBanco()
+        public FbConnection ConexaoBanco()
         {
             try
             {
@@ -44,7 +41,7 @@ namespace EM.Repository
         public override void Add(Aluno aluno)
 
         {
-            var conexao = new FbConnection(ConexaoStr);
+            conexao = new FbConnection(ConexaoStr);
             conexao.Open();
             const string insert = @"INSERT INTO ALUNOS (MATRICULA, NOME, SEXO, NASCIMENTO, CPF) 
                                    VALUES(@Matricula, @Nome, @Sexo, @Nascimento, @CPF)";
@@ -61,7 +58,7 @@ namespace EM.Repository
 
         public override void Remove(Aluno aluno)
         {
-            var conexao = new FbConnection(ConexaoStr);
+            conexao = new FbConnection(ConexaoStr);
             conexao.Open();
 
             var delete = $@"DELETE FROM ALUNOS WHERE MATRICULA = {aluno.Matricula}";
@@ -73,7 +70,7 @@ namespace EM.Repository
 
         public override void Update(Aluno aluno)
         {
-            var conexao = new FbConnection(ConexaoStr);
+            conexao = new FbConnection(ConexaoStr);
             conexao.Open();
 
             var update = $@"UPDATE ALUNOS
@@ -91,17 +88,16 @@ namespace EM.Repository
 
         public override IEnumerable<Aluno> Get(Expression<Func<Aluno, bool>> predicate)
         {
-            var conexao = new FbConnection(ConexaoStr);
+            conexao = new FbConnection(ConexaoStr);
             conexao.Open();
             var alunos = (List<Aluno>)GetAll();
 
             return alunos.AsQueryable().Where(predicate).ToList();
         }
 
-
         public override IEnumerable<Aluno> GetAll()
         {
-            var conexao = new FbConnection(ConexaoStr);
+            conexao = new FbConnection(ConexaoStr);
             conexao.Open();
 
             var lista = $@"SELECT * FROM ALUNOS
@@ -132,7 +128,7 @@ namespace EM.Repository
 
         public Aluno GetByMatricula(int matricula)
         {
-            var conexao = new FbConnection(ConexaoStr);
+            conexao = new FbConnection(ConexaoStr);
             conexao.Open();
 
             var selectMatricula = $@"SELECT * FROM ALUNOS WHERE MATRICULA = {matricula}";
@@ -153,11 +149,9 @@ namespace EM.Repository
             } : null;
         }
         
-         
-
         public IEnumerable<Aluno> GetByContendoNoNome(string parteDoNome)
         {
-            var conexao = new FbConnection(ConexaoStr);
+            conexao = new FbConnection(ConexaoStr);
             conexao.Open();
 
             var selectNome = $@"SELECT * FROM ALUNOS WHERE UPPER(NOME) LIKE UPPER('%{parteDoNome}%')";
@@ -174,11 +168,11 @@ namespace EM.Repository
             {
                 var aluno = new Aluno()
                 {
-                    Matricula = (int)dtble.Rows[0][0],
-                    Nome = dtble.Rows[0][1].ToString(),
-                    Sexo = (EnumeradorSexo)dtble.Rows[0][2],
-                    Nascimento = (DateTime)dtble.Rows[0][3],
-                    CPF = dtble.Rows[0][4].ToString()
+                    Matricula = (int)dtble.Rows[i][0],
+                    Nome = dtble.Rows[i][1].ToString(),
+                    Sexo = (EnumeradorSexo)dtble.Rows[i][2],
+                    Nascimento = (DateTime)dtble.Rows[i][3],
+                    CPF = dtble.Rows[i][4].ToString()
                 };
                 alunos.Add(aluno);
             }

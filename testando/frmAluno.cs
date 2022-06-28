@@ -1,14 +1,9 @@
 ﻿using EM.Domain;
 using EM.Repository;
-using FirebirdSql.Data.FirebirdClient;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace cadastro
@@ -16,9 +11,9 @@ namespace cadastro
     public partial class frmAluno : Form
     {
         RepositorioAluno repositorioAluno = new RepositorioAluno();
-        private Aluno aluno = new Aluno();
-        private DataTable dtTable = new DataTable();
-        ValidacaoAluno validacaoAluno = new ValidacaoAluno();
+        Aluno aluno = new Aluno();
+        DataTable dtTable = new DataTable();
+        ValidaALuno validaAluno = new ValidaALuno();
         public frmAluno()
         {
             InitializeComponent();
@@ -26,7 +21,8 @@ namespace cadastro
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            RepositorioAluno.ConexaoBanco();
+            repositorioAluno.ConexaoBanco();
+            comboBoxSexo.SelectedIndex = 1;
             AddColunasTabela();
             GridAlunos(repositorioAluno.GetAll());
         }
@@ -55,25 +51,21 @@ namespace cadastro
 
         private void buttonAdicionar_Click(object sender, EventArgs e)
         {
-            aluno = new Aluno();
-
-            if (!ValidaMatriculaVazia())
+            if (!validaAluno.ValidaMatriculaVazia(textBoxMatricula.Text))
                 return;            
 
             aluno.Matricula = Int32.Parse(textBoxMatricula.Text);
-            if (!ValidaMatricula(aluno.Matricula))
+            if (!validaAluno.ValidaMatricula(aluno.Matricula))
                 return;
 
             aluno.Nome = textBoxNome.Text;
-            if (!validacaoAluno.ValidoNome(aluno.Nome))
+            if (!validaAluno.ValidoNome(aluno.Nome))
             {
                 textBoxNome.Focus();
                 return;
             }
 
             aluno.Sexo = comboBoxSexo.Text.Equals("Masculino") ? EnumeradorSexo.Masculino : EnumeradorSexo.Feminino;
-            if (!ValidoSexo())
-                return;
 
             if (!maskedTextBoxNascimento.MaskFull)
             {
@@ -83,20 +75,20 @@ namespace cadastro
             }
             DateTime.TryParse(maskedTextBoxNascimento.Text, out DateTime dateTime);
             aluno.Nascimento = dateTime;
-            if (!validacaoAluno.ValidoNascimento(dateTime))
+            if (!validaAluno.ValidoNascimento(dateTime))
             {
                 maskedTextBoxNascimento.Focus();
                 return;
             }
             aluno.CPF = textBoxCpf.Text;
 
-            if (!validacaoAluno.ValidoCPF(aluno.CPF))
+            if (!validaAluno.ValidoCPF(aluno.CPF))
             {
                 textBoxCpf.Focus();
                 return;
             }
 
-            if (!CpfRepetido(aluno.CPF))
+            if (!validaAluno.CpfRepetido(aluno.CPF, aluno.Matricula))
             {
                 textBoxCpf.Focus();
                 return;
@@ -123,13 +115,16 @@ namespace cadastro
                 buttonModificar.Visible = true;
                 mudarLabelInicial();
             }
-            if (textBoxMatricula.Text == string.Empty || textBoxMatricula.Text == null)
-                MessageBox.Show("Nenhum aluno selecionado.", "ATENÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (string.IsNullOrEmpty(textBoxMatricula.Text)) 
+            { 
+            MessageBox.Show("Nenhum aluno selecionado.", "ATENÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             return;
         }
 
         private void mudarLabelInicial()
         {
+
             if (buttonCancelar.Visible == true)
             {
                 label1.Text = "Editar dados do Aluno";
@@ -146,10 +141,6 @@ namespace cadastro
                 aluno = new Aluno()
                 {
                     Matricula = (int)DataGridAlunos.CurrentRow.Cells[0].Value,
-                    Nome = DataGridAlunos.CurrentRow.Cells[1].Value.ToString(),
-                    Sexo = (EnumeradorSexo)DataGridAlunos.CurrentRow.Cells[2].Value,
-                    Nascimento = (DateTime)DataGridAlunos.CurrentRow.Cells[3].Value,
-                    CPF = DataGridAlunos.CurrentRow.Cells[4].Value.ToString()
                 };
             }
             else
@@ -165,7 +156,6 @@ namespace cadastro
                 repositorioAluno.Remove(aluno);
                 aluno.Nome = DataGridAlunos.CurrentRow.Cells[1].Value.ToString();
                 GridAlunos(repositorioAluno.GetAll());
-                DataGridAlunos.DataSource = dtTable;
                 MessageBox.Show($"Aluno {aluno.Nome} foi excluído com sucesso!", "Exclusão", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 limparCampos();
             }
@@ -190,14 +180,12 @@ namespace cadastro
             aluno.Matricula = int.Parse(textBoxMatricula.Text);
 
             aluno.Nome = textBoxNome.Text;
-            if (!validacaoAluno.ValidoNome(aluno.Nome))
+            if (!validaAluno.ValidoNome(aluno.Nome))
             {
                 textBoxNome.Focus(); 
                 return;
             }
             aluno.Sexo = comboBoxSexo.Text.Equals("Masculino") ? EnumeradorSexo.Masculino : EnumeradorSexo.Feminino;
-            if (!ValidoSexo())
-                return;
 
             if (!maskedTextBoxNascimento.MaskFull)
             {
@@ -207,18 +195,18 @@ namespace cadastro
             }
             DateTime.TryParse(maskedTextBoxNascimento.Text, out DateTime dateTime);
             aluno.Nascimento = dateTime;
-            if (!validacaoAluno.ValidoNascimento(aluno.Nascimento))
+            if (!validaAluno.ValidoNascimento(aluno.Nascimento))
             {
                 maskedTextBoxNascimento.Focus();
                 return;
             }
             aluno.CPF = textBoxCpf.Text;
-            if (!validacaoAluno.ValidoCPF(aluno.CPF))
+            if (!validaAluno.ValidoCPF(aluno.CPF))
                 return;
 
             if (!string.IsNullOrWhiteSpace(aluno.CPF))
             {
-                if (!CpfRepetido(aluno.CPF))
+                if (!validaAluno.CpfRepetido(aluno.CPF, aluno.Matricula))
                     return;
             }
             
@@ -302,68 +290,6 @@ namespace cadastro
             textBoxPesquisar.Clear();
             textBoxMatricula.Focus();
         }
-
-        private bool ValidaMatricula(int matricula)
-        {
-            if (repositorioAluno.GetByMatricula(matricula) != null)
-            {
-                MessageBox.Show($"A matrícula {aluno.Matricula} já está sendo utilizada, tente outro número!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                textBoxMatricula.Clear();
-                textBoxMatricula.Focus();
-                return false;
-            }
-            /* if (repositorioAluno.GetAll().Any(alunoAdd => alunoAdd.Equals(matricula)))
-             {
-                 MessageBox.Show($"A matrícula {aluno.Matricula} já está sendo utilizada, tente outro número!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                 textBoxMatricula.Clear();
-                 textBoxMatricula.Focus();
-                 return false;
-             }*/
-            /*if (aluno.Equals(matricula))
-            {
-                MessageBox.Show($"A matrícula {aluno.Matricula} já está sendo utilizada, tente outro número!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                textBoxMatricula.Clear();
-                textBoxMatricula.Focus();
-                return false;
-            }*/
-            return true;
-        }
-
-        private bool ValidaMatriculaVazia()
-        {
-            if (string.IsNullOrEmpty(textBoxMatricula.Text))
-            {
-                MessageBox.Show("Campo de matrícula obrigatório!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                textBoxMatricula.Focus();
-                return false;
-            }
-            return true;
-        }
-        
-        private bool ValidoSexo()
-        {
-            if (comboBoxSexo.SelectedIndex == -1)
-            {
-                MessageBox.Show("Selecione o sexo do aluno!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                comboBoxSexo.Focus();
-                return false;
-            }
-            return true;
-        }
-
-        private bool CpfRepetido(string cpf)
-        {
-            if (string.IsNullOrWhiteSpace(cpf))
-                return true;
-            if (repositorioAluno.Get(a => a.CPF == aluno.CPF && a.Matricula != aluno.Matricula).FirstOrDefault() != null)
-                {
-                    MessageBox.Show("CPF já cadastrado.", "Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    textBoxCpf.Focus();
-                    return false;
-                }
-            return true;
-        }
-
     }
 }
 
