@@ -8,9 +8,7 @@ namespace EM.Repository
     public class ValidaALuno
     {
         RepositorioAluno repositorioAluno = new RepositorioAluno();
-        Aluno aluno = new Aluno();
-
-
+        
         public bool ValidaMatricula(int matricula)
         {
             if (repositorioAluno.GetByMatricula(matricula) != null)
@@ -18,13 +16,6 @@ namespace EM.Repository
                 MessageBox.Show($"A matrícula {matricula} já está sendo utilizada, tente outro número!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            /*if (aluno.Equals(matricula))
-            {
-                MessageBox.Show($"A matrícula {aluno.Matricula} já está sendo utilizada, tente outro número!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                textBoxMatricula.Clear();
-                textBoxMatricula.Focus();
-                return false;
-            }*/
             return true;
         }
         public bool ValidaMatriculaVazia(string matricula)

@@ -1,40 +1,47 @@
 ﻿using EM.Repository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 
 namespace EM.Domain.Testes
 {
-   
+    [TestClass]
     public class AlunoTeste
     {
-        private RepositorioAluno repositorioAluno = new RepositorioAluno();
-        private List<Aluno> allAlunos = new List<Aluno>();
-        private int matricula;
-        private string nome;
-        private string cpf;
-        private DateTime nascimento;
-        private EnumeradorSexo sexo;
+        Aluno aluno = new Aluno();
+        ValidaALuno validaAluno = new ValidaALuno();
+        public void Aluno()
+        {
+            aluno.Matricula = 9999;
+            aluno.Nome = "Paulo";
+            aluno.CPF = "70148832164";
+            aluno.Nascimento = Convert.ToDateTime("20/04/2002");
+            aluno.Sexo = (EnumeradorSexo)0;
+        }
 
         [TestMethod]
-        public void TestMethod1()
+        public void TesteMatricula()
         {
+            Assert.IsTrue(aluno.Matricula <= 0 || aluno.Matricula > 999999999);
         }
 
-        public void MatriculaAluno(int alunomatricula)
+        [TestMethod]
+        public void TesteMatriculaDupla()
         {
-            matricula = alunomatricula;
-        }
-        
-        public void SexoAluno(EnumeradorSexo alunosexo)
-        {
-            sexo = alunosexo;
+            Assert.IsTrue(validaAluno.ValidaMatricula(aluno.Matricula));
         }
 
-        public void DataDeNascimentoAluno(DateTime alunonascimento)
+        [TestMethod]
+        public void TesteEquals()
         {
-            nascimento = alunonascimento;
+            Aluno a = new Aluno();
+            a.Matricula = 20;
+            Assert.AreNotEqual(aluno.Matricula, a.Matricula);
         }
 
+        [TestMethod]
+        public void TesteString()
+        {
+            aluno.ToString();
+        }
     }
 }
