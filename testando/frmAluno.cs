@@ -3,7 +3,6 @@ using EM.Repository;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace cadastro
@@ -21,7 +20,6 @@ namespace cadastro
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            repositorioAluno.ConexaoBanco();
             comboBoxSexo.SelectedIndex = 1;
             AddColunasTabela();
             GridAlunos(repositorioAluno.GetAll());
@@ -52,11 +50,17 @@ namespace cadastro
         private void buttonAdicionar_Click(object sender, EventArgs e)
         {
             if (!validaAluno.ValidaMatriculaVazia(textBoxMatricula.Text))
-                return;            
+            {
+                textBoxMatricula.Focus();
+                return;
+            }
 
             aluno.Matricula = Int32.Parse(textBoxMatricula.Text);
             if (!validaAluno.ValidaMatricula(aluno.Matricula))
+            {
+                textBoxMatricula.Focus();
                 return;
+            }
 
             aluno.Nome = textBoxNome.Text;
             if (!validaAluno.ValidoNome(aluno.Nome))
@@ -109,22 +113,21 @@ namespace cadastro
                 textBoxCpf.Text = DataGridAlunos.CurrentRow.Cells[4].Value.ToString();
 
                 textBoxMatricula.ReadOnly = true;
-                buttonLimpar.Visible = false;
+                
                 buttonCancelar.Visible = true;
                 buttonAdicionar.Visible = false;
                 buttonModificar.Visible = true;
                 mudarLabelInicial();
             }
-            if (string.IsNullOrEmpty(textBoxMatricula.Text)) 
-            { 
-            MessageBox.Show("Nenhum aluno selecionado.", "ATENÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (string.IsNullOrEmpty(textBoxMatricula.Text))
+            {
+                MessageBox.Show("Nenhum aluno selecionado.", "ATENÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             return;
         }
 
         private void mudarLabelInicial()
         {
-
             if (buttonCancelar.Visible == true)
             {
                 label1.Text = "Editar dados do Aluno";
@@ -175,14 +178,12 @@ namespace cadastro
 
         private void buttonModificar_Click(object sender, EventArgs e)
         {
-            aluno = new Aluno();
-
             aluno.Matricula = int.Parse(textBoxMatricula.Text);
 
             aluno.Nome = textBoxNome.Text;
             if (!validaAluno.ValidoNome(aluno.Nome))
             {
-                textBoxNome.Focus(); 
+                textBoxNome.Focus();
                 return;
             }
             aluno.Sexo = comboBoxSexo.Text.Equals("Masculino") ? EnumeradorSexo.Masculino : EnumeradorSexo.Feminino;
@@ -209,11 +210,11 @@ namespace cadastro
                 if (!validaAluno.CpfRepetido(aluno.CPF, aluno.Matricula))
                     return;
             }
-            
+
             repositorioAluno.Update(aluno);
             GridAlunos(repositorioAluno.GetAll());
             MessageBox.Show($"Os dados do aluno {aluno.Nome}, foram modificados.", "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            
+
             buttonLimpar.Visible = true;
             buttonCancelar.Visible = false;
             buttonAdicionar.Visible = true;
@@ -267,7 +268,7 @@ namespace cadastro
             {
                 GridAlunos(repositorioAluno.GetAll());
             }
-            foreach(char caracter in textBoxPesquisar.Text)
+            foreach (char caracter in textBoxPesquisar.Text)
             {
                 if (char.IsDigit(caracter))
                 {

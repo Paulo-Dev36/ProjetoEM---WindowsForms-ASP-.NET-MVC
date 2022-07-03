@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace EM.Repository
 {
-    public abstract class RepositorioAbstrato <T> where T : IEntidade
+    public abstract class RepositorioAbstrato<T> where T : IEntidade
     {
         public abstract void Add(T aluno);
         public abstract void Update(T aluno);
