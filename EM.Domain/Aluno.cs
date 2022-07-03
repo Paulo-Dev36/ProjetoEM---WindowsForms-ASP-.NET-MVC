@@ -17,7 +17,8 @@ namespace EM.Domain
 
         public override bool Equals(object obj)
         {
-            return obj is Aluno aluno && aluno.Matricula == Matricula;
+            return obj is Aluno aluno &&
+                   Matricula == aluno.Matricula;
         }
 
         public override int GetHashCode()

@@ -2,6 +2,8 @@
 using System;
 using EM.Repository;
 using EM.Domain;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EM.Repository.Testes
 {
@@ -21,7 +23,7 @@ namespace EM.Repository.Testes
         {
             Aluno aluno = new Aluno
             {
-                Matricula = 10005,
+                Matricula = 105,
                 Nome = "Paulo",
                 Sexo = (EnumeradorSexo)0,
                 Nascimento = Convert.ToDateTime("20/04/2002"),
@@ -75,6 +77,12 @@ namespace EM.Repository.Testes
             aluno.Nome = "Paulo";
 
             Assert.IsNotNull(repositorioAluno.GetByContendoNoNome(aluno.Nome));
+        }
+        [TestMethod]
+        public void Get()
+        {
+            int matricula = 1;
+            Assert.IsNotNull (repositorioAluno.Get(a => a.Matricula == matricula).First());
         }
     }
 }

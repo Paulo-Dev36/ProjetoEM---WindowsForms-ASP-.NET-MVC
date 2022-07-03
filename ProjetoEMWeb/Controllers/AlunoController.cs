@@ -47,7 +47,6 @@ namespace ProjetoEMWeb.Controllers
             return View(listaAlunos);
         }
         
-
         public IActionResult IndexM(string MatriculaOuNomeAluno)
         {
             Aluno aluno = new Aluno();
@@ -57,8 +56,6 @@ namespace ProjetoEMWeb.Controllers
 
                 return View(aluno);
         }
-
-
 
         public ActionResult Remove(Aluno aluno)
         {
@@ -149,16 +146,6 @@ namespace ProjetoEMWeb.Controllers
         }
 
 
-        private void AddColunasTabela()
-        {
-            dtTable.Columns.Add("Matricula", typeof(int));
-            dtTable.Columns.Add("Nome", typeof(string));
-            dtTable.Columns.Add("Sexo", typeof(EnumeradorSexo));
-            dtTable.Columns.Add("Nascimento", typeof(DateTime));
-            dtTable.Columns.Add("CPF", typeof(string));
-        }
-
-
         private bool ValidaMatricula(int matricula)
         {
             if(repositorioAluno.GetByMatricula(matricula) != null)
@@ -199,9 +186,9 @@ namespace ProjetoEMWeb.Controllers
             }
             return true;
         }
+
         private bool ValidoCPF(string cpf)
         {
-            //Aluno aluno = new Aluno();
             if (!string.IsNullOrWhiteSpace(cpf))
             {
                 if (cpf.Length != 11)

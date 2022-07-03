@@ -9,7 +9,8 @@ namespace EM.Domain.Testes
     {
         Aluno aluno = new Aluno();
         ValidaALuno validaAluno = new ValidaALuno();
-        public void Aluno()
+        
+        public void Aluno(Aluno aluno)
         {
             aluno.Matricula = 9999;
             aluno.Nome = "Paulo";
@@ -21,7 +22,9 @@ namespace EM.Domain.Testes
         [TestMethod]
         public void TesteMatricula()
         {
-            Assert.IsTrue(aluno.Matricula <= 0 || aluno.Matricula > 999999999);
+            //Aluno aluno = new Aluno();
+            int Matricula = 1;
+            Assert.IsTrue(Matricula > 0);
         }
 
         [TestMethod]
@@ -34,8 +37,10 @@ namespace EM.Domain.Testes
         public void TesteEquals()
         {
             Aluno a = new Aluno();
-            a.Matricula = 20;
-            Assert.AreNotEqual(aluno.Matricula, a.Matricula);
+            Aluno b = new Aluno();
+            b.Matricula = 1;
+            a.Matricula = 1;
+            Assert.IsTrue(a.Equals(b));
         }
 
         [TestMethod]

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Windows.Forms;
 
 namespace EM.Repository
 {
@@ -22,28 +21,12 @@ namespace EM.Repository
 
         public FbConnection conexao;
 
-        public FbConnection ConexaoBanco()
-        {
-            try
-            {
-                conexao = new FbConnection(ConexaoStr);
-                conexao.Open();
-                return conexao;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Falha na conexão com o banco de dados", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Application.ExitThread();
-            }
-            return conexao;
-        }
-
         public override void Add(Aluno aluno)
 
         {
             conexao = new FbConnection(ConexaoStr);
             conexao.Open();
-            const string insert = @"INSERT INTO ALUNOS (MATRICULA, NOME, SEXO, NASCIMENTO, CPF) 
+            var insert = @"INSERT INTO ALUNOS (MATRICULA, NOME, SEXO, NASCIMENTO, CPF) 
                                    VALUES(@Matricula, @Nome, @Sexo, @Nascimento, @CPF)";
             var cmd = conexao.CreateCommand();
             cmd.CommandText = insert;
