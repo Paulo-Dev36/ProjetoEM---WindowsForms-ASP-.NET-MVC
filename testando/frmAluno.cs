@@ -141,10 +141,7 @@ namespace cadastro
         {
             if (DataGridAlunos.Rows.Count > 0)
             {
-                aluno = new Aluno()
-                {
-                    Matricula = (int)DataGridAlunos.CurrentRow.Cells[0].Value,
-                };
+                    aluno.Matricula = (int)DataGridAlunos.CurrentRow.Cells[0].Value;
             }
             else
             {
