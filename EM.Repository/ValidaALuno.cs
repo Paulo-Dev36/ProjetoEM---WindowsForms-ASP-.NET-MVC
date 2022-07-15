@@ -9,34 +9,34 @@ namespace EM.Repository
     {
         RepositorioAluno repositorioAluno = new RepositorioAluno();
         
-        public bool ValidaMatricula(int matricula)
+        public bool EhMatriculaRepetida(int matricula) 
         {
             if (repositorioAluno.GetByMatricula(matricula) != null)
             {
                 MessageBox.Show($"A matrícula {matricula} já está sendo utilizada, tente outro número!", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
-        public bool ValidaMatriculaVazia(string matricula)
+        public bool EhMatriculaVazia(string matricula)
         {
             if (string.IsNullOrEmpty(matricula))
             {
                 MessageBox.Show("Campo de matrícula obrigatório!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
-        public bool ValidoNome(string nome)
+        public bool EhNomeVazio(string nome)
         {
             if (string.IsNullOrWhiteSpace(nome))
             {
                 MessageBox.Show("Campo do nome obrigatório!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
-        public bool ValidoNascimento(DateTime nascimento)
+        public bool EhNascimentoValido(DateTime nascimento)
         {
             if (nascimento > DateTime.Now)
             {
@@ -51,19 +51,19 @@ namespace EM.Repository
             return true;
         }
 
-        public bool CpfRepetido(string cpf, int matricula)
+        public bool EhCPFRepetido(string cpf, int matricula)
         {
             if (string.IsNullOrWhiteSpace(cpf))
-                return true;
+                return false;
             if (repositorioAluno.Get(a => a.CPF == cpf && a.Matricula != matricula).FirstOrDefault() != null)
             {
                 MessageBox.Show("CPF já cadastrado.", "Inválido", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
-        public bool ValidoCPF(string cpf)
+        public bool EhCPFValido(string cpf)
         {
             if (!string.IsNullOrWhiteSpace(cpf))
             {

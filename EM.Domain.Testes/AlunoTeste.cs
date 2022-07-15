@@ -30,7 +30,7 @@ namespace EM.Domain.Testes
         [TestMethod]
         public void TesteMatriculaDupla()
         {
-            Assert.IsTrue(validaAluno.ValidaMatricula(aluno.Matricula));
+            Assert.IsTrue(validaAluno.EhMatriculaRepetida(aluno.Matricula));
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace EM.Domain.Testes
         [TestMethod]
         public void TesteString()
         {
-            aluno.ToString();
+            aluno.ToString( );
         }
     }
 }

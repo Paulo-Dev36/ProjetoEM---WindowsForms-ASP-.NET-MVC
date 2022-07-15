@@ -26,7 +26,7 @@ namespace ProjetoEMWeb.Controllers
         public IActionResult Index(string MatriculaOuNomeAluno)
         {
             List<Aluno> listaAlunos = new List<Aluno>();
-            Aluno aluno = new Aluno();
+            Aluno aluno = new();
             listaAlunos = repositorioAluno.GetAll().ToList();
 
             if (!String.IsNullOrEmpty(MatriculaOuNomeAluno))

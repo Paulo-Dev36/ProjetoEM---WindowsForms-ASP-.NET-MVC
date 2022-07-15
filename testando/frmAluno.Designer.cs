@@ -84,9 +84,11 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
-            this.groupBox1.Location = new System.Drawing.Point(12, 24);
+            this.groupBox1.Location = new System.Drawing.Point(9, 20);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(964, 197);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(723, 160);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
@@ -97,9 +99,10 @@
             this.buttonModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonModificar.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
             this.buttonModificar.ForeColor = System.Drawing.Color.Black;
-            this.buttonModificar.Location = new System.Drawing.Point(807, 120);
+            this.buttonModificar.Location = new System.Drawing.Point(605, 98);
+            this.buttonModificar.Margin = new System.Windows.Forms.Padding(2);
             this.buttonModificar.Name = "buttonModificar";
-            this.buttonModificar.Size = new System.Drawing.Size(131, 54);
+            this.buttonModificar.Size = new System.Drawing.Size(98, 44);
             this.buttonModificar.TabIndex = 13;
             this.buttonModificar.Text = "MODIFICAR";
             this.buttonModificar.UseVisualStyleBackColor = false;
@@ -113,10 +116,9 @@
             this.buttonCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCancelar.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
             this.buttonCancelar.ForeColor = System.Drawing.Color.Black;
-            this.buttonCancelar.Location = new System.Drawing.Point(669, 120);
-            this.buttonCancelar.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonCancelar.Location = new System.Drawing.Point(502, 98);
             this.buttonCancelar.Name = "buttonCancelar";
-            this.buttonCancelar.Size = new System.Drawing.Size(131, 54);
+            this.buttonCancelar.Size = new System.Drawing.Size(98, 44);
             this.buttonCancelar.TabIndex = 12;
             this.buttonCancelar.Text = "CANCELAR";
             this.buttonCancelar.UseVisualStyleBackColor = false;
@@ -126,10 +128,12 @@
             // textBoxMatricula
             // 
             this.textBoxMatricula.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.textBoxMatricula.Location = new System.Drawing.Point(41, 56);
+            this.textBoxMatricula.Location = new System.Drawing.Point(31, 46);
+            this.textBoxMatricula.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxMatricula.MaxLength = 9;
             this.textBoxMatricula.Name = "textBoxMatricula";
-            this.textBoxMatricula.Size = new System.Drawing.Size(187, 32);
+            this.textBoxMatricula.ShortcutsEnabled = false;
+            this.textBoxMatricula.Size = new System.Drawing.Size(141, 27);
             this.textBoxMatricula.TabIndex = 1;
             this.textBoxMatricula.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.textBoxMatricula.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxMatricula_KeyPress_1);
@@ -141,9 +145,10 @@
             this.buttonAdicionar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdicionar.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
             this.buttonAdicionar.ForeColor = System.Drawing.Color.Black;
-            this.buttonAdicionar.Location = new System.Drawing.Point(807, 120);
+            this.buttonAdicionar.Location = new System.Drawing.Point(605, 98);
+            this.buttonAdicionar.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAdicionar.Name = "buttonAdicionar";
-            this.buttonAdicionar.Size = new System.Drawing.Size(131, 54);
+            this.buttonAdicionar.Size = new System.Drawing.Size(98, 44);
             this.buttonAdicionar.TabIndex = 11;
             this.buttonAdicionar.Text = "ADICIONAR";
             this.buttonAdicionar.UseVisualStyleBackColor = false;
@@ -156,10 +161,9 @@
             this.buttonLimpar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLimpar.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
             this.buttonLimpar.ForeColor = System.Drawing.Color.Black;
-            this.buttonLimpar.Location = new System.Drawing.Point(669, 120);
-            this.buttonLimpar.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonLimpar.Location = new System.Drawing.Point(502, 98);
             this.buttonLimpar.Name = "buttonLimpar";
-            this.buttonLimpar.Size = new System.Drawing.Size(131, 54);
+            this.buttonLimpar.Size = new System.Drawing.Size(98, 44);
             this.buttonLimpar.TabIndex = 10;
             this.buttonLimpar.Text = "LIMPAR";
             this.buttonLimpar.UseVisualStyleBackColor = false;
@@ -168,10 +172,11 @@
             // textBoxCpf
             // 
             this.textBoxCpf.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.textBoxCpf.Location = new System.Drawing.Point(422, 133);
+            this.textBoxCpf.Location = new System.Drawing.Point(316, 108);
+            this.textBoxCpf.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxCpf.MaxLength = 11;
             this.textBoxCpf.Name = "textBoxCpf";
-            this.textBoxCpf.Size = new System.Drawing.Size(213, 32);
+            this.textBoxCpf.Size = new System.Drawing.Size(161, 27);
             this.textBoxCpf.TabIndex = 9;
             this.textBoxCpf.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxCpf_KeyPress);
             // 
@@ -179,19 +184,21 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.label6.Location = new System.Drawing.Point(418, 105);
+            this.label6.Location = new System.Drawing.Point(314, 85);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(40, 24);
+            this.label6.Size = new System.Drawing.Size(32, 19);
             this.label6.TabIndex = 8;
             this.label6.Text = "CPF";
             // 
             // maskedTextBoxNascimento
             // 
             this.maskedTextBoxNascimento.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.maskedTextBoxNascimento.Location = new System.Drawing.Point(254, 133);
+            this.maskedTextBoxNascimento.Location = new System.Drawing.Point(190, 108);
+            this.maskedTextBoxNascimento.Margin = new System.Windows.Forms.Padding(2);
             this.maskedTextBoxNascimento.Mask = "00/00/0000";
             this.maskedTextBoxNascimento.Name = "maskedTextBoxNascimento";
-            this.maskedTextBoxNascimento.Size = new System.Drawing.Size(134, 32);
+            this.maskedTextBoxNascimento.Size = new System.Drawing.Size(102, 27);
             this.maskedTextBoxNascimento.TabIndex = 7;
             this.maskedTextBoxNascimento.ValidatingType = typeof(System.DateTime);
             // 
@@ -199,9 +206,10 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.label5.Location = new System.Drawing.Point(250, 105);
+            this.label5.Location = new System.Drawing.Point(188, 85);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(110, 24);
+            this.label5.Size = new System.Drawing.Size(91, 19);
             this.label5.TabIndex = 6;
             this.label5.Text = "NASCIMENTO";
             // 
@@ -214,28 +222,31 @@
             this.comboBoxSexo.Items.AddRange(new object[] {
             "Masculino",
             "Feminino"});
-            this.comboBoxSexo.Location = new System.Drawing.Point(41, 132);
+            this.comboBoxSexo.Location = new System.Drawing.Point(31, 107);
+            this.comboBoxSexo.Margin = new System.Windows.Forms.Padding(2);
             this.comboBoxSexo.Name = "comboBoxSexo";
-            this.comboBoxSexo.Size = new System.Drawing.Size(187, 32);
+            this.comboBoxSexo.Size = new System.Drawing.Size(141, 27);
             this.comboBoxSexo.TabIndex = 5;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.label4.Location = new System.Drawing.Point(37, 105);
+            this.label4.Location = new System.Drawing.Point(28, 85);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(50, 24);
+            this.label4.Size = new System.Drawing.Size(42, 19);
             this.label4.TabIndex = 4;
             this.label4.Text = "SEXO";
             // 
             // textBoxNome
             // 
             this.textBoxNome.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.textBoxNome.Location = new System.Drawing.Point(254, 56);
+            this.textBoxNome.Location = new System.Drawing.Point(190, 46);
+            this.textBoxNome.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxNome.MaxLength = 100;
             this.textBoxNome.Name = "textBoxNome";
-            this.textBoxNome.Size = new System.Drawing.Size(684, 32);
+            this.textBoxNome.Size = new System.Drawing.Size(514, 27);
             this.textBoxNome.TabIndex = 3;
             this.textBoxNome.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxNome_KeyPress);
             // 
@@ -243,9 +254,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.label3.Location = new System.Drawing.Point(250, 28);
+            this.label3.Location = new System.Drawing.Point(188, 23);
+            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 24);
+            this.label3.Size = new System.Drawing.Size(46, 19);
             this.label3.TabIndex = 2;
             this.label3.Text = "NOME";
             // 
@@ -253,9 +265,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.label2.Location = new System.Drawing.Point(37, 28);
+            this.label2.Location = new System.Drawing.Point(28, 23);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 24);
+            this.label2.Size = new System.Drawing.Size(83, 19);
             this.label2.TabIndex = 0;
             this.label2.Text = "MATRÍCULA";
             // 
@@ -263,18 +276,20 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(18, 9);
+            this.label1.Location = new System.Drawing.Point(14, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 20);
+            this.label1.Size = new System.Drawing.Size(90, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "Novo aluno";
             // 
             // textBoxPesquisar
             // 
             this.textBoxPesquisar.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
-            this.textBoxPesquisar.Location = new System.Drawing.Point(53, 240);
+            this.textBoxPesquisar.Location = new System.Drawing.Point(40, 195);
+            this.textBoxPesquisar.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxPesquisar.Name = "textBoxPesquisar";
-            this.textBoxPesquisar.Size = new System.Drawing.Size(746, 32);
+            this.textBoxPesquisar.Size = new System.Drawing.Size(560, 27);
             this.textBoxPesquisar.TabIndex = 12;
             // 
             // buttonPesquisar
@@ -284,13 +299,14 @@
             this.buttonPesquisar.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.buttonPesquisar.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
             this.buttonPesquisar.ForeColor = System.Drawing.Color.White;
-            this.buttonPesquisar.Location = new System.Drawing.Point(805, 240);
+            this.buttonPesquisar.Location = new System.Drawing.Point(604, 195);
+            this.buttonPesquisar.Margin = new System.Windows.Forms.Padding(2);
             this.buttonPesquisar.Name = "buttonPesquisar";
-            this.buttonPesquisar.Size = new System.Drawing.Size(145, 32);
+            this.buttonPesquisar.Size = new System.Drawing.Size(109, 26);
             this.buttonPesquisar.TabIndex = 13;
             this.buttonPesquisar.Text = "PESQUISAR";
             this.buttonPesquisar.UseVisualStyleBackColor = false;
-            this.buttonPesquisar.Click += new System.EventHandler(this.buttonPesquisar_Click);
+            this.buttonPesquisar.Click += new System.EventHandler(this.ButtonPesquisar_Click);
             // 
             // DataGridAlunos
             // 
@@ -325,7 +341,8 @@
             dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.DataGridAlunos.DefaultCellStyle = dataGridViewCellStyle3;
-            this.DataGridAlunos.Location = new System.Drawing.Point(53, 291);
+            this.DataGridAlunos.Location = new System.Drawing.Point(40, 236);
+            this.DataGridAlunos.Margin = new System.Windows.Forms.Padding(2);
             this.DataGridAlunos.MultiSelect = false;
             this.DataGridAlunos.Name = "DataGridAlunos";
             this.DataGridAlunos.ReadOnly = true;
@@ -340,7 +357,7 @@
             this.DataGridAlunos.RowHeadersWidth = 51;
             this.DataGridAlunos.RowTemplate.Height = 24;
             this.DataGridAlunos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DataGridAlunos.Size = new System.Drawing.Size(897, 214);
+            this.DataGridAlunos.Size = new System.Drawing.Size(673, 174);
             this.DataGridAlunos.TabIndex = 14;
             // 
             // matriculaDataGridViewTextBoxColumn
@@ -400,9 +417,10 @@
             this.buttonDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDelete.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
             this.buttonDelete.ForeColor = System.Drawing.Color.Black;
-            this.buttonDelete.Location = new System.Drawing.Point(819, 514);
+            this.buttonDelete.Location = new System.Drawing.Point(614, 418);
+            this.buttonDelete.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(131, 37);
+            this.buttonDelete.Size = new System.Drawing.Size(98, 30);
             this.buttonDelete.TabIndex = 16;
             this.buttonDelete.Text = "EXCLUIR";
             this.buttonDelete.UseVisualStyleBackColor = false;
@@ -415,9 +433,10 @@
             this.buttonEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEdit.Font = new System.Drawing.Font("Bahnschrift SemiCondensed", 12F);
             this.buttonEdit.ForeColor = System.Drawing.Color.Black;
-            this.buttonEdit.Location = new System.Drawing.Point(682, 514);
+            this.buttonEdit.Location = new System.Drawing.Point(512, 418);
+            this.buttonEdit.Margin = new System.Windows.Forms.Padding(2);
             this.buttonEdit.Name = "buttonEdit";
-            this.buttonEdit.Size = new System.Drawing.Size(131, 37);
+            this.buttonEdit.Size = new System.Drawing.Size(98, 30);
             this.buttonEdit.TabIndex = 15;
             this.buttonEdit.Text = "EDITAR";
             this.buttonEdit.UseVisualStyleBackColor = false;
@@ -425,10 +444,10 @@
             // 
             // frmAluno
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(1000, 558);
+            this.ClientSize = new System.Drawing.Size(750, 453);
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonEdit);
             this.Controls.Add(this.DataGridAlunos);
@@ -438,6 +457,7 @@
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.Name = "frmAluno";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
