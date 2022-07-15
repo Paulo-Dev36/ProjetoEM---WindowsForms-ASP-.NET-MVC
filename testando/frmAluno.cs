@@ -9,26 +9,22 @@ namespace cadastro
 {
     public partial class frmAluno : Form
     {
-        RepositorioAluno repositorioAluno = new RepositorioAluno();
-        Aluno aluno = new Aluno();
-        DataTable dtTable = new DataTable();
-        ValidaALuno validaAluno = new ValidaALuno();
-        public frmAluno()
-        {
-            InitializeComponent();
-        }
-
+        readonly RepositorioAluno repositorioAluno = new RepositorioAluno();
+        readonly Aluno aluno = new Aluno();
+        readonly DataTable dtTable = new DataTable();
+        readonly ValidaALuno validaAluno = new ValidaALuno();
+        
+        public frmAluno() => InitializeComponent();
+        
         private void Form1_Load(object sender, EventArgs e)
         {
             comboBoxSexo.SelectedIndex = 1;
-            AddColunasTabela();
+            AddColunasTabela(); 
             GridAlunos(repositorioAluno.GetAll());
         }
 
-        private void buttonLimpar_Click(object sender, EventArgs e)
-        {
-            limparCampos();
-        }
+        private void buttonLimpar_Click(object sender, EventArgs e) => limparCampos();
+        
         private void textBoxNome_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsLetter(e.KeyChar) && !(e.KeyChar == (char)Keys.Back) && !(e.KeyChar == (char)Keys.Space))
@@ -49,21 +45,21 @@ namespace cadastro
 
         private void buttonAdicionar_Click(object sender, EventArgs e)
         {
-            if (!validaAluno.ValidaMatriculaVazia(textBoxMatricula.Text))
+            if (validaAluno.EhMatriculaVazia(textBoxMatricula.Text))
             {
                 textBoxMatricula.Focus();
                 return;
             }
 
             aluno.Matricula = Int32.Parse(textBoxMatricula.Text);
-            if (!validaAluno.ValidaMatricula(aluno.Matricula))
+            if (validaAluno.EhMatriculaRepetida(aluno.Matricula))
             {
                 textBoxMatricula.Focus();
                 return;
             }
 
             aluno.Nome = textBoxNome.Text;
-            if (!validaAluno.ValidoNome(aluno.Nome))
+            if (validaAluno.EhNomeVazio(aluno.Nome))
             {
                 textBoxNome.Focus();
                 return;
@@ -71,28 +67,22 @@ namespace cadastro
 
             aluno.Sexo = comboBoxSexo.Text.Equals("Masculino") ? EnumeradorSexo.Masculino : EnumeradorSexo.Feminino;
 
-            if (!maskedTextBoxNascimento.MaskFull)
-            {
-                MessageBox.Show("Data de nascimento obrigatória!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                maskedTextBoxNascimento.Focus();
-                return;
-            }
             DateTime.TryParse(maskedTextBoxNascimento.Text, out DateTime dateTime);
             aluno.Nascimento = dateTime;
-            if (!validaAluno.ValidoNascimento(dateTime))
+            if (!validaAluno.EhNascimentoValido(dateTime))
             {
                 maskedTextBoxNascimento.Focus();
                 return;
             }
             aluno.CPF = textBoxCpf.Text;
 
-            if (!validaAluno.ValidoCPF(aluno.CPF))
+            if (!validaAluno.EhCPFValido(aluno.CPF))
             {
                 textBoxCpf.Focus();
                 return;
             }
 
-            if (!validaAluno.CpfRepetido(aluno.CPF, aluno.Matricula))
+            if (validaAluno.EhCPFRepetido(aluno.CPF, aluno.Matricula))
             {
                 textBoxCpf.Focus();
                 return;
@@ -113,12 +103,12 @@ namespace cadastro
                 textBoxCpf.Text = DataGridAlunos.CurrentRow.Cells[4].Value.ToString();
 
                 textBoxMatricula.ReadOnly = true;
-                
                 buttonCancelar.Visible = true;
                 buttonAdicionar.Visible = false;
                 buttonModificar.Visible = true;
                 mudarLabelInicial();
             }
+            
             if (string.IsNullOrEmpty(textBoxMatricula.Text))
             {
                 MessageBox.Show("Nenhum aluno selecionado.", "ATENÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -178,7 +168,7 @@ namespace cadastro
             aluno.Matricula = int.Parse(textBoxMatricula.Text);
 
             aluno.Nome = textBoxNome.Text;
-            if (!validaAluno.ValidoNome(aluno.Nome))
+            if (validaAluno.EhNomeVazio(aluno.Nome))
             {
                 textBoxNome.Focus();
                 return;
@@ -193,18 +183,18 @@ namespace cadastro
             }
             DateTime.TryParse(maskedTextBoxNascimento.Text, out DateTime dateTime);
             aluno.Nascimento = dateTime;
-            if (!validaAluno.ValidoNascimento(aluno.Nascimento))
+            if (!validaAluno.EhNascimentoValido(aluno.Nascimento))
             {
                 maskedTextBoxNascimento.Focus();
                 return;
             }
             aluno.CPF = textBoxCpf.Text;
-            if (!validaAluno.ValidoCPF(aluno.CPF))
+            if (!validaAluno.EhCPFValido(aluno.CPF))
                 return;
 
             if (!string.IsNullOrWhiteSpace(aluno.CPF))
             {
-                if (!validaAluno.CpfRepetido(aluno.CPF, aluno.Matricula))
+                if (validaAluno.EhCPFRepetido(aluno.CPF, aluno.Matricula))
                     return;
             }
 
@@ -238,6 +228,7 @@ namespace cadastro
                 dtTable.Rows.Add(aluno.Matricula, aluno.Nome, aluno.Sexo, aluno.Nascimento, aluno.CPF);
             }
         }
+        
         private void DadosDataTable(Aluno aluno)
         {
             dtTable.Clear();
@@ -250,8 +241,8 @@ namespace cadastro
             DadosDataTable(alunos);
             bindingSource1.DataSource = dtTable;
             DataGridAlunos.DataSource = bindingSource1;
-
         }
+
         private void GridAlunos(Aluno aluno)
         {
             DadosDataTable(aluno);
@@ -259,7 +250,7 @@ namespace cadastro
             DataGridAlunos.DataSource = bindingSource1;
         }
 
-        private void buttonPesquisar_Click(object sender, EventArgs e)
+        private void ButtonPesquisar_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(textBoxPesquisar.Text))
             {
@@ -279,6 +270,7 @@ namespace cadastro
                 }
             }
         }
+        
         private void limparCampos()
         {
             textBoxMatricula.Clear();
@@ -290,4 +282,3 @@ namespace cadastro
         }
     }
 }
-

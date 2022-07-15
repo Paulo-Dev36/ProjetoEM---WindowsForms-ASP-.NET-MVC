@@ -15,24 +15,12 @@ namespace EM.Domain
         public DateTime Nascimento { get; set; }
         public string CPF { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            return obj is Aluno aluno &&
-                   Matricula == aluno.Matricula;
-        }
+        public override bool Equals(object obj) => obj is Aluno aluno && Matricula == aluno.Matricula;
+        
+        public override int GetHashCode() => Matricula;
 
-        public override int GetHashCode()
-        {
-            return Matricula;
-        }
-
-        public override string ToString()
-        {
-            return "Matricula: " + Matricula +
-                "\nNome: " + Nome +
-                "\nSexo: " + Sexo +
-                "\nNascimento: " + Nascimento +
-                "\n CPF: " + CPF + "\n";
-        }
+        public override string ToString() => "Matricula: " + Matricula + "\nNome: " + Nome +
+                "\nSexo: " + Sexo + "\nNascimento: " + Nascimento + "\n CPF: " + CPF + "\n";
+        
     }   
 }

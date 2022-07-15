@@ -11,12 +11,9 @@ namespace EM.Repository
     public class RepositorioAluno : RepositorioAbstrato<Aluno>
     {
         string ConexaoStr;
-        public RepositorioAluno()
-        {
-            ConexaoStr = "User=SYSDBA; Password=masterkey;Database=C:\\Users\\pvini\\source\\repos\\Escolar Manager\\Banco\\BANCOESCOLARMANAGERTESTE.FB4;" +
-                                                                                                  "character set=Iso8859_1; DataSource=Localhost;Port=3054";
-
-        }
+        public RepositorioAluno() => 
+            ConexaoStr = @"User=SYSDBA; Password=masterkey;Database=C:\Users\Escolar Manager\Desktop\Banco\BANCOESCOLARMANAGERTESTE.FB4;
+                                                                                                  character set=Iso8859_1; DataSource=Localhost;Port=3054";
 
         public FbConnection conexao;
 
@@ -33,7 +30,7 @@ namespace EM.Repository
 
             cmd.Parameters.AddWithValue(@"Matricula", aluno.Matricula);
             cmd.Parameters.AddWithValue(@"Nome", aluno.Nome);
-            cmd.Parameters.AddWithValue(@"Sexo", (int)aluno.Sexo);
+            cmd.Parameters.AddWithValue(@"Sexo", aluno.Sexo);
             cmd.Parameters.AddWithValue(@"Nascimento", aluno.Nascimento);
             cmd.Parameters.AddWithValue(@"CPF", aluno.CPF);
             cmd.ExecuteNonQuery();
@@ -77,7 +74,7 @@ namespace EM.Repository
 
             return alunos.AsQueryable().Where(predicate).ToList();
         }
-
+        
         public override IEnumerable<Aluno> GetAll()
         {
             conexao = new FbConnection(ConexaoStr);
