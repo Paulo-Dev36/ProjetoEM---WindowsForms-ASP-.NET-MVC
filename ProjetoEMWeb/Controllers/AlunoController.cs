@@ -11,9 +11,9 @@ namespace ProjetoEMWeb.Controllers
     
     public class AlunoController : Controller
     {
-        Aluno aluno = new Aluno();
-        DataTable dtTable = new DataTable();
-        RepositorioAluno repositorioAluno = new RepositorioAluno();
+        Aluno aluno = new();
+        private readonly DataTable dtTable = new();
+        readonly RepositorioAluno repositorioAluno = new();
         
         public IActionResult Index(IEnumerable<Aluno> alunos)
         {
@@ -25,8 +25,7 @@ namespace ProjetoEMWeb.Controllers
         [HttpPost]
         public IActionResult Index(string MatriculaOuNomeAluno)
         {
-            List<Aluno> listaAlunos = new List<Aluno>();
-            Aluno aluno = new();
+            List<Aluno> listaAlunos = new();
             listaAlunos = repositorioAluno.GetAll().ToList();
 
             if (!String.IsNullOrEmpty(MatriculaOuNomeAluno))
@@ -49,12 +48,11 @@ namespace ProjetoEMWeb.Controllers
         
         public IActionResult IndexM(string MatriculaOuNomeAluno)
         {
-            Aluno aluno = new Aluno();
             int matricula = Convert.ToInt32(MatriculaOuNomeAluno);
             matricula = 1;
             aluno = repositorioAluno.GetByMatricula(matricula);
 
-                return View(aluno);
+            return View(aluno);
         }
 
         public ActionResult Remove(Aluno aluno)
@@ -63,36 +61,26 @@ namespace ProjetoEMWeb.Controllers
             return RedirectToAction("Index");   
         }
 
-        public IActionResult Add()
-        {
-            return View(aluno);
-        }
+        public IActionResult Add() => View(aluno);
 
         [HttpPost]
         public IActionResult Add(Aluno aluno)
         {
             if (!ModelState.IsValid)
-            {
                 return View();  
-            }
-            if (!ValidaMatricula(aluno.Matricula))
-            {
-                return View();
-            }
 
-            if (!ValidaNomeNull(aluno.Nome))
-            {
+            if (!EhMatriculaValida(aluno.Matricula))
                 return View();
-            }
-            if (!ValidoNascimento(aluno.Nascimento))
-            {
+
+            if (EhNomeVazio(aluno.Nome))
                 return View();
-            }
+
+            if (!EhNascimentoValido(aluno.Nascimento))
+                return View();
             
             if (!ValidoCPF(aluno.CPF))
-            {
                 return View();
-            }
+
             if (repositorioAluno.Get(a => a.CPF == aluno.CPF && a.Matricula != aluno.Matricula).FirstOrDefault() != null)
             {
                 ModelState.AddModelError("CPF", "CPF já cadastrado!");
@@ -103,32 +91,26 @@ namespace ProjetoEMWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Update(int id)
+        public IActionResult Update(Aluno aluno, int id)
         {
-            Aluno aluno = repositorioAluno.GetByMatricula(id);
+            aluno = repositorioAluno.GetByMatricula(id);
             return View(aluno);
         }
         [HttpPost]
         public IActionResult Update(Aluno aluno)
         {
             if (!ModelState.IsValid)
-            {
                 return View();
-            }
+            
+            if (EhNomeVazio(aluno.Nome))
+                return View();
 
-            if (!ValidaNomeNull(aluno.Nome))
-            {
+            if (!EhNascimentoValido(aluno.Nascimento))
                 return View();
-            }
 
-            if (!ValidoNascimento(aluno.Nascimento))
-            {
-                return View();
-            }
             if (!ValidoCPF(aluno.CPF))
-            {
                 return View();
-            }
+
             if (repositorioAluno.Get(a => a.CPF == aluno.CPF && a.Matricula != aluno.Matricula).FirstOrDefault() != null)
             {
                 ModelState.AddModelError("CPF", "CPF já cadastrado!");
@@ -145,8 +127,7 @@ namespace ProjetoEMWeb.Controllers
             return RedirectToAction("Index");
         }
 
-
-        private bool ValidaMatricula(int matricula)
+        private bool EhMatriculaValida(int matricula)
         {
             if(repositorioAluno.GetByMatricula(matricula) != null)
             {
@@ -154,7 +135,7 @@ namespace ProjetoEMWeb.Controllers
                 return false;
             }
 
-            if(matricula == 0)
+            if(matricula.Equals(0))
             {
                 ModelState.AddModelError("Matricula", "A matrícula deve ser um número maior que 0");
                 return false;
@@ -162,17 +143,17 @@ namespace ProjetoEMWeb.Controllers
                 return true;
         }
 
-        private bool ValidaNomeNull(string nome)
+        private bool EhNomeVazio(string nome)
         {
-            if(nome == null)
+            if(nome.Equals(null))
             {
                 ModelState.AddModelError("Nome", "O campo nome é obrigatório!");
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
-        public bool ValidoNascimento(DateTime nascimento)
+        public bool EhNascimentoValido(DateTime nascimento)
         {
             if(nascimento > DateTime.Now)
             {
@@ -206,9 +187,8 @@ namespace ProjetoEMWeb.Controllers
                     intCpf[i] = valor;
 
                     if (j >= 2 && sucessoNaConversao)
-                    {
                         soma += intCpf[i] * j;
-                    }
+
                 }
 
                 var cpfComTodosDigitosIguais = true;
@@ -229,10 +209,7 @@ namespace ProjetoEMWeb.Controllers
 
                 penultimoDigito = (soma * 10) % 11;
                 if (penultimoDigito == 10)
-                {
                     penultimoDigito = 0;
-                }
-
                 if (penultimoDigito != intCpf[9])
                 {
                     ModelState.AddModelError("CPF", "Informe um CPF válido!");
@@ -247,9 +224,7 @@ namespace ProjetoEMWeb.Controllers
 
                 ultimoDigito = (soma * 10) % 11;
                 if (ultimoDigito == 10)
-                {
                     ultimoDigito = 0;
-                }
 
                 if (ultimoDigito != intCpf[10])
                 {
@@ -260,5 +235,4 @@ namespace ProjetoEMWeb.Controllers
             return true;
         }
     }
-    }
-
+}
