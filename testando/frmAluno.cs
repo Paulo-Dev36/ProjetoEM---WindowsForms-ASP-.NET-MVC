@@ -50,32 +50,32 @@ namespace cadastro
                 textBoxMatricula.Focus();
                 return;
             }
-
             aluno.Matricula = Int32.Parse(textBoxMatricula.Text);
+            aluno.Nome = textBoxNome.Text;
+            aluno.Sexo = comboBoxSexo.Text.Equals("Masculino") ? EnumeradorSexo.Masculino : EnumeradorSexo.Feminino;
+            DateTime.TryParse(maskedTextBoxNascimento.Text, out DateTime dateTime);
+            aluno.Nascimento = dateTime;
+            aluno.CPF = textBoxCpf.Text;
+
             if (validaAluno.EhMatriculaRepetida(aluno.Matricula))
             {
                 textBoxMatricula.Focus();
                 return;
             }
-
-            aluno.Nome = textBoxNome.Text;
+            
             if (validaAluno.EhNomeVazio(aluno.Nome))
             {
                 textBoxNome.Focus();
                 return;
             }
 
-            aluno.Sexo = comboBoxSexo.Text.Equals("Masculino") ? EnumeradorSexo.Masculino : EnumeradorSexo.Feminino;
-
-            DateTime.TryParse(maskedTextBoxNascimento.Text, out DateTime dateTime);
-            aluno.Nascimento = dateTime;
+            
             if (!validaAluno.EhNascimentoValido(dateTime))
             {
                 maskedTextBoxNascimento.Focus();
                 return;
             }
-            aluno.CPF = textBoxCpf.Text;
-
+            
             if (!validaAluno.EhCPFValido(aluno.CPF))
             {
                 textBoxCpf.Focus();
@@ -135,7 +135,7 @@ namespace cadastro
             }
             else
             {
-                MessageBox.Show("Nenhum aluno selecionado.", "ATENÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Nenhum aluno selecionado.", "ATENÇÃO", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
                 return;
             }
 

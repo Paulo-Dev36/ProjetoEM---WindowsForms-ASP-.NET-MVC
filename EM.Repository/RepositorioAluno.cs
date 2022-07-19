@@ -11,15 +11,12 @@ namespace EM.Repository
     public class RepositorioAluno : RepositorioAbstrato<Aluno>
     {
         string ConexaoStr;
-        public RepositorioAluno() => 
-            ConexaoStr = @"User=SYSDBA; Password=masterkey;Database=C:\Users\Escolar Manager\Desktop\Banco\BANCOESCOLARMANAGERTESTE.FB4;
-                                                                                                  character set=Iso8859_1; DataSource=Localhost;Port=3054";
+        public RepositorioAluno() => ConexaoStr = @"User=SYSDBA; Password=masterkey;Database=C:\Users\Escolar Manager\Desktop\Banco\BANCOESCOLARMANAGERTESTE.FB4;
+                                                    character set=Iso8859_1; DataSource=Localhost;Port=3054";
 
         public FbConnection conexao;
-
-
+   
         public override void Add(Aluno aluno)
-
         {
             conexao = new FbConnection(ConexaoStr);
             conexao.Open();
